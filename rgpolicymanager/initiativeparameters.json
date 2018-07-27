@@ -1,0 +1,29 @@
+﻿{
+  "infyBusinessUnitValue": {
+    "value": "CCD"
+  },
+  "infyCostCenterValue": {
+    "value": "CCDCOSTCENTER"
+  },
+  "infyProjectCodeValue": {
+    "value": "CCDPROJECTCODE"
+  },
+  "infyEAPurposeValue": {
+    "value": "CCDPURPOSETAG"
+  },
+  "infyEAWorkloadTypeValue": {
+    "value": "CCDWORKLOADTYPE"
+  },
+  "infyEACustomTag01Value": {
+    "value": "CCDCUSTOMTAG01"
+  },
+  "infyEACustomTag02Value": {
+    "value": "CCDCUSTOMTAG02"
+  },
+  "infyEACustomTag03Value": {
+    "value": "CCDCUSTOMTAG03"
+  },
+  "vmNamePatternValueValue": {
+    "value": "azvm$PRJ$######"
+  }
+}
