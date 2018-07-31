@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Azure.Management.ResourceManager.Fluent;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest;
@@ -40,6 +42,18 @@ namespace rgpolicymanager.core
             ServiceClientCredentials serviceClientCreds = new TokenCredentials(authResult.AccessToken);
 
             return serviceClientCreds;
+        }
+
+        /// <summary>
+        /// Returns Azure Credentials
+        /// </summary>
+        /// <returns></returns>
+        public AzureCredentials GetAzureCrendentials()
+        {
+            AzureCredentials credentials = SdkContext.AzureCredentialsFactory.FromServicePrincipal(_appSettings.Clientid, _appSettings.Clientsecret, _appSettings.TenantId, AzureEnvironment.AzureGlobalCloud);
+
+            return credentials;
+
         }
     }
 }

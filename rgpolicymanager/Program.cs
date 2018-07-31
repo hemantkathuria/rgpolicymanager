@@ -34,13 +34,18 @@ namespace rgpolicymanager
 
             string initiativeAssignmentName = $"{appSettings.Value.ResourceGroupName}_{appSettings.Value.Initiativename}";
 
-            var resourceGroup = resourceGroupManager.EnsureResourceGroupExists(appSettings.Value.ResourceGroupName, appSettings.Value.ResourceGroupLocation, tags.Value).Result;
+            var resourceGroup = await resourceGroupManager.EnsureResourceGroupExists(appSettings.Value.ResourceGroupName, appSettings.Value.ResourceGroupLocation, tags.Value);
 
             Console.WriteLine("Resource Group Created!");
 
-            var initiative = policyManager.AssignInitiative(appSettings.Value.Initiativename, appSettings.Value.ProjectCode, resourceGroup.Id, initiativeAssignmentName, tags.Value).Result;
+            var initiative = await policyManager.AssignInitiative(appSettings.Value.Initiativename, appSettings.Value.ProjectCode, resourceGroup.Id, initiativeAssignmentName, tags.Value);
 
             Console.WriteLine("Initiative Assigned!");
+
+            await resourceGroupManager.AssignRoles(appSettings.Value.MainResourceGroup, 
+                                                    appSettings.Value.PPCReaderRoleId,appSettings.Value.ResourceGroupName,appSettings.Value.ContributorRoleId,appSettings.Value.ADProjectGroupId);
+
+            Console.WriteLine("Roles Assigned!");
 
             Console.ReadLine();
         }
@@ -66,6 +71,8 @@ namespace rgpolicymanager
             {
                 IConfigurationSection appSettingsSection = configuration.GetSection("AppSettings");
 
+                appSettings.TenantId = appSettingsSection["tenantid"]; 
+
                 appSettings.Authority = appSettingsSection["authority"];
 
                 appSettings.Clientid = appSettingsSection["clientid"];
@@ -86,6 +93,13 @@ namespace rgpolicymanager
 
                 appSettings.ProjectCode = appSettingsSection["projectcode"];
 
+                appSettings.PPCReaderRoleId = appSettingsSection["ppcreaderroleid"];
+
+                appSettings.ContributorRoleId = appSettingsSection["contributorroleid"];
+
+                appSettings.MainResourceGroup = appSettingsSection["mainresourcegroup"];
+
+                appSettings.ADProjectGroupId = appSettingsSection["adprojectgroupid"];
 
             });
 

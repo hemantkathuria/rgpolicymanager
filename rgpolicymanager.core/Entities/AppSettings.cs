@@ -10,6 +10,11 @@ namespace rgpolicymanager.core.Entities
     public class AppSettings
     {
         /// <summary>
+        /// TenantId
+        /// </summary>
+        public string TenantId { get; set; }
+
+        /// <summary>
         /// Authority
         /// </summary>
         public string Authority { get; set; }
@@ -58,6 +63,27 @@ namespace rgpolicymanager.core.Entities
         /// ResourceGroupLocation
         /// </summary>
         public string ResourceGroupLocation { get; set; }
-       
+
+        /// <summary>
+        /// PPCReaderRoleId
+        /// </summary>
+        public string PPCReaderRoleId { get; set; }
+
+        /// <summary>
+        /// ContributorReaderRoleId
+        /// </summary>
+        public string ContributorRoleId { get; set; }
+
+        /// <summary>
+        /// MainResourceGroup
+        /// </summary>
+        public string MainResourceGroup { get; set; }
+
+        /// <summary>
+        /// ADProjectGroupId
+        /// </summary>
+        public string ADProjectGroupId { get; set; }
+
+
     }
 }
