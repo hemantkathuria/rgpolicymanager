@@ -1,0 +1,31 @@
+{
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "not": {
+            "field": "name",
+            "match": "[parameters('asnamepattern')]"
+          }
+        },
+        {
+          "field": "type",
+          "equals": "Microsoft.Compute/availabilitySets"
+        }
+      ]
+    },
+    "then": {
+      "effect": "deny"
+    }
+  },
+  "parameters": {
+    "asnamepattern": {
+      "type": "String",
+      "metadata": {
+        "displayName": "asnamepattern",
+        "description": "pattern to check for"
+      }
+    }
+  },
+  "metadata": {}
+}
