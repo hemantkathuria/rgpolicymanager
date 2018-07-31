@@ -1,0 +1,25 @@
+{
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Compute/virtualMachines"
+        },
+        {
+          "not": {
+            "field": "Microsoft.Compute/virtualMachines/availabilitySet.id",
+            "exists": "true"
+          }
+        }
+      ]
+    },
+    "then": {
+      "effect": "deny"
+    }
+  },
+  "parameters": {},
+  "metadata": {
+    "category": "CUSTOM_TEST"
+  }
+}

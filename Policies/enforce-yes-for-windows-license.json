@@ -1,0 +1,24 @@
+{
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Compute/virtualMachines"
+        },
+        {
+          "not": {
+            "field": "Microsoft.Compute/licenseType",
+            "equals": "windows"
+          }
+        }
+      ]
+    },
+    "then": {
+      "effect": "deny"
+    }
+  },
+  "metadata": {
+    "category": "CUSTOM_TEST"
+  }
+}

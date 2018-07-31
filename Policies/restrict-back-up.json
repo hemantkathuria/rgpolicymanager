@@ -1,0 +1,27 @@
+{
+  "policyRule": {
+    "if": {
+      "anyOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.RecoveryServices/vaults"
+        },
+        {
+          "field": "type",
+          "equals": "Microsoft.RecoveryServices/vaults/backupPolicies"
+        },
+        {
+          "field": "type",
+          "equals": "Microsoft.RecoveryServices/vaults/backupFabrics/backupProtectionIntent"
+        }
+      ]
+    },
+    "then": {
+      "effect": "deny"
+    }
+  },
+  "parameters": {},
+  "metadata": {
+    "category": "CUSTOM_TEST"
+  }
+}

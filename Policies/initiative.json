@@ -1,0 +1,333 @@
+{
+  "properties.policyType": "Custom",
+  "properties.displayName": "Infoys PPC Initiative - All",
+  "properties.description": null,
+  "properties.metadata": {
+    "category": "CUSTOM_TEST",
+    "parameterScopes": {
+      "listOfResourceTypesAllowed": "/subscriptions/5fc55004-edd5-4d87-beca-5887dfe573ea/resourceGroups/rg-policy-test",
+      "listOfAllowedLocations": "/subscriptions/5fc55004-edd5-4d87-beca-5887dfe573ea",
+      "resourceGroupName": "/subscriptions/5fc55004-edd5-4d87-beca-5887dfe573ea"
+    }
+  },
+  "properties.parameters": {
+    "infyBusinessUnitValue": {
+      "type": "String",
+      "metadata": {
+        "displayName": "required value for INFY_EA_BusinessUnit tag"
+      }
+    },
+    "infyCostCenterValue": {
+      "type": "String",
+      "metadata": {
+        "displayName": "required value for INFY_EA_CostCenter tag"
+      }
+    },
+    "infyProjectCodeValue": {
+      "type": "String",
+      "metadata": {
+        "displayName": "required value for INFY_EA_ProjectCode tag"
+      }
+    },
+    "infyEAPurposeValue": {
+      "type": "String",
+      "metadata": {
+        "displayName": "required value for INFY_EA_Purpose tag"
+      }
+    },
+    "infyEAWorkloadTypeValue": {
+      "type": "String",
+      "metadata": {
+        "displayName": "required value for INFY_EA_WorkLoadType tag"
+      }
+    },
+    "infyEACustomTag01Value": {
+      "type": "String",
+      "metadata": {
+        "displayName": "required value for INFY_EA_CustomTag01 tag"
+      }
+    },
+    "infyEACustomTag02Value": {
+      "type": "String",
+      "metadata": {
+        "displayName": "required value for INFY_EA_CustomTag02 tag"
+      }
+    },
+    "infyEACustomTag03Value": {
+      "type": "String",
+      "metadata": {
+        "displayName": "required value for INFY_EA_CustomTag03 tag"
+      }
+    },
+    "vmNamePatternValueValue": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Virtual Machine Name Pattern"
+      }
+    }
+  },
+  "properties.policyDefinitions": [
+    {
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/a08ec900-254a-4555-9bf5-e42af04b5c5c",
+      "parameters": { "listOfResourceTypesAllowed": { "value": [ "Microsoft.Compute/disks", "Microsoft.Compute/availabilitySets", "Microsoft.Compute/virtualMachines", "Microsoft.Compute/virtualMachines/diagnosticSettings", "Microsoft.Compute/virtualMachines/extensions", "Microsoft.Compute/virtualMachines/metricDefinitions", "Microsoft.Network/networkInterfaces", "Microsoft.Network/networkSecurityGroups", "Microsoft.Storage/storageAccounts" ] } }
+    },
+    {
+      "policyDefinitionId": "/subscriptions/5fc55004-edd5-4d87-beca-5887dfe573ea/providers/Microsoft.Authorization/policyDefinitions/5056ca04-f5e2-446d-ae04-a929618340b1",
+      "parameters": { "vmnamepattern": { "value": "[parameters('vmNamePatternValueValue')]" } }
+    },
+    {
+      "policyDefinitionId": "/subscriptions/5fc55004-edd5-4d87-beca-5887dfe573ea/providers/Microsoft.Authorization/policyDefinitions/5056ca04-f5e2-446d-ae04-a9296183410a",
+      "parameters": {}
+    },
+    {
+      "policyDefinitionId": "/subscriptions/5fc55004-edd5-4d87-beca-5887dfe573ea/providers/Microsoft.Authorization/policyDefinitions/07a735bd-66cf-4fab-b8a4-ba7f1f7c9111",
+      "parameters": {}
+    },
+    {
+      "policyDefinitionId": "/subscriptions/5fc55004-edd5-4d87-beca-5887dfe573ea/providers/Microsoft.Authorization/policyDefinitions/a20e8222-84f7-4701-8cbc-56ab456e9093",
+      "parameters": { "subnetId": { "value": "/subscriptions/5fc55004-edd5-4d87-beca-5887dfe573ea/resourceGroups/rg-staging-main/providers/Microsoft.Network/virtualNetworks/ppc-virtual-network/subnets/app" } }
+    },
+    {
+      "policyDefinitionId": "/subscriptions/5fc55004-edd5-4d87-beca-5887dfe573ea/providers/Microsoft.Authorization/policyDefinitions/a20e8222-84f7-4701-8cbc-56ab456e9033",
+      "parameters": {}
+    },
+    {
+      "policyDefinitionId": "/subscriptions/5fc55004-edd5-4d87-beca-5887dfe573ea/providers/Microsoft.Authorization/policyDefinitions/a20e8222-84f7-4701-8cbc-56ab456e9061",
+      "parameters": {}
+    },
+    {
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/e56962a6-4747-49cd-b67b-bf8b01975c4c",
+      "parameters": { "listOfAllowedLocations": { "value": [ "southindia" ] } }
+    },
+    {
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/1e30110a-5ceb-460c-a204-c1c3969c6d62",
+      "parameters": {
+        "tagName": { "value": "INFY_EA_BusinessUnit" },
+        "tagValue": { "value": "[parameters('infyBusinessUnitValue')]" }
+      }
+    },
+    {
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/2a0e14a6-b0a6-4fab-991a-187a4f81c498",
+      "parameters": {
+        "tagName": { "value": "INFY_EA_BusinessUnit" },
+        "tagValue": { "value": "[parameters('infyBusinessUnitValue')]" }
+      }
+    },
+    {
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/8ce3da23-7156-49e4-b145-24f95f9dcb46",
+      "parameters": {
+        "tagName": { "value": "INFY_EA_BusinessUnit" },
+        "tagValue": { "value": "[parameters('infyBusinessUnitValue')]" }
+      }
+    },
+    {
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/49c88fc8-6fd1-46fd-a676-f12d1d3a4c71",
+      "parameters": {
+        "tagName": { "value": "INFY_EA_BusinessUnit" },
+        "tagValue": { "value": "[parameters('infyBusinessUnitValue')]" }
+      }
+    },
+    {
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/1e30110a-5ceb-460c-a204-c1c3969c6d62",
+      "parameters": {
+        "tagName": { "value": "INFY_EA_CostCenter" },
+        "tagValue": { "value": "[parameters('infyCostCenterValue')]" }
+      }
+    },
+    {
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/2a0e14a6-b0a6-4fab-991a-187a4f81c498",
+      "parameters": {
+        "tagName": { "value": "INFY_EA_CostCenter" },
+        "tagValue": { "value": "[parameters('infyCostCenterValue')]" }
+      }
+    },
+    {
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/8ce3da23-7156-49e4-b145-24f95f9dcb46",
+      "parameters": {
+        "tagName": { "value": "INFY_EA_CostCenter" },
+        "tagValue": { "value": "[parameters('infyCostCenterValue')]" }
+      }
+    },
+    {
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/49c88fc8-6fd1-46fd-a676-f12d1d3a4c71",
+      "parameters": {
+        "tagName": { "value": "INFY_EA_CostCenter" },
+        "tagValue": { "value": "[parameters('infyCostCenterValue')]" }
+      }
+    },
+    {
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/1e30110a-5ceb-460c-a204-c1c3969c6d62",
+      "parameters": {
+        "tagName": { "value": "INFY_EA_ProjectCode" },
+        "tagValue": { "value": "[parameters('infyProjectCodeValue')]" }
+      }
+    },
+    {
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/2a0e14a6-b0a6-4fab-991a-187a4f81c498",
+      "parameters": {
+        "tagName": { "value": "INFY_EA_ProjectCode" },
+        "tagValue": { "value": "[parameters('infyProjectCodeValue')]" }
+      }
+    },
+    {
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/8ce3da23-7156-49e4-b145-24f95f9dcb46",
+      "parameters": {
+        "tagName": { "value": "INFY_EA_ProjectCode" },
+        "tagValue": { "value": "[parameters('infyProjectCodeValue')]" }
+      }
+    },
+    {
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/49c88fc8-6fd1-46fd-a676-f12d1d3a4c71",
+      "parameters": {
+        "tagName": { "value": "INFY_EA_ProjectCode" },
+        "tagValue": { "value": "[parameters('infyProjectCodeValue')]" }
+      }
+    },
+    {
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/1e30110a-5ceb-460c-a204-c1c3969c6d62",
+      "parameters": {
+        "tagName": { "value": "INFY_EA_Purpose" },
+        "tagValue": { "value": "[parameters('infyEAPurposeValue')]" }
+      }
+    },
+    {
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/2a0e14a6-b0a6-4fab-991a-187a4f81c498",
+      "parameters": {
+        "tagName": { "value": "INFY_EA_Purpose" },
+        "tagValue": { "value": "[parameters('infyEAPurposeValue')]" }
+      }
+    },
+    {
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/8ce3da23-7156-49e4-b145-24f95f9dcb46",
+      "parameters": {
+        "tagName": { "value": "INFY_EA_Purpose" },
+        "tagValue": { "value": "[parameters('infyEAPurposeValue')]" }
+      }
+    },
+    {
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/49c88fc8-6fd1-46fd-a676-f12d1d3a4c71",
+      "parameters": {
+        "tagName": { "value": "INFY_EA_Purpose" },
+        "tagValue": { "value": "[parameters('infyEAPurposeValue')]" }
+      }
+    },
+    {
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/1e30110a-5ceb-460c-a204-c1c3969c6d62",
+      "parameters": {
+        "tagName": { "value": "INFY_EA_WorkLoadType" },
+        "tagValue": { "value": "[parameters('infyEAWorkloadTypeValue')]" }
+      }
+    },
+    {
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/2a0e14a6-b0a6-4fab-991a-187a4f81c498",
+      "parameters": {
+        "tagName": { "value": "INFY_EA_WorkLoadType" },
+        "tagValue": { "value": "[parameters('infyEAWorkloadTypeValue')]" }
+      }
+    },
+    {
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/8ce3da23-7156-49e4-b145-24f95f9dcb46",
+      "parameters": {
+        "tagName": { "value": "INFY_EA_WorkLoadType" },
+        "tagValue": { "value": "[parameters('infyEAWorkloadTypeValue')]" }
+      }
+    },
+    {
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/49c88fc8-6fd1-46fd-a676-f12d1d3a4c71",
+      "parameters": {
+        "tagName": { "value": "INFY_EA_WorkLoadType" },
+        "tagValue": { "value": "[parameters('infyEAWorkloadTypeValue')]" }
+      }
+    },
+    {
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/1e30110a-5ceb-460c-a204-c1c3969c6d62",
+      "parameters": {
+        "tagName": { "value": "INFY_EA_CustomTag01" },
+        "tagValue": { "value": "[parameters('infyEACustomTag01Value')]" }
+      }
+    },
+    {
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/2a0e14a6-b0a6-4fab-991a-187a4f81c498",
+      "parameters": {
+        "tagName": { "value": "INFY_EA_CustomTag01" },
+        "tagValue": { "value": "[parameters('infyEACustomTag01Value')]" }
+      }
+    },
+    {
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/8ce3da23-7156-49e4-b145-24f95f9dcb46",
+      "parameters": {
+        "tagName": { "value": "INFY_EA_CustomTag01" },
+        "tagValue": { "value": "[parameters('infyEACustomTag01Value')]" }
+      }
+    },
+    {
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/49c88fc8-6fd1-46fd-a676-f12d1d3a4c71",
+      "parameters": {
+        "tagName": { "value": "INFY_EA_CustomTag01" },
+        "tagValue": { "value": "[parameters('infyEACustomTag01Value')]" }
+      }
+    },
+    {
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/1e30110a-5ceb-460c-a204-c1c3969c6d62",
+      "parameters": {
+        "tagName": { "value": "INFY_EA_CustomTag02" },
+        "tagValue": { "value": "[parameters('infyEACustomTag02Value')]" }
+      }
+    },
+    {
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/2a0e14a6-b0a6-4fab-991a-187a4f81c498",
+      "parameters": {
+        "tagName": { "value": "INFY_EA_CustomTag02" },
+        "tagValue": { "value": "[parameters('infyEACustomTag02Value')]" }
+      }
+    },
+    {
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/8ce3da23-7156-49e4-b145-24f95f9dcb46",
+      "parameters": {
+        "tagName": { "value": "INFY_EA_CustomTag02" },
+        "tagValue": { "value": "[parameters('infyEACustomTag02Value')]" }
+      }
+    },
+    {
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/49c88fc8-6fd1-46fd-a676-f12d1d3a4c71",
+      "parameters": {
+        "tagName": { "value": "INFY_EA_CustomTag02" },
+        "tagValue": { "value": "[parameters('infyEACustomTag02Value')]" }
+      }
+    },
+    {
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/1e30110a-5ceb-460c-a204-c1c3969c6d62",
+      "parameters": {
+        "tagName": { "value": "INFY_EA_CustomTag03" },
+        "tagValue": { "value": "[parameters('infyEACustomTag03Value')]" }
+      }
+    },
+    {
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/2a0e14a6-b0a6-4fab-991a-187a4f81c498",
+      "parameters": {
+        "tagName": { "value": "INFY_EA_CustomTag03" },
+        "tagValue": { "value": "[parameters('infyEACustomTag03Value')]" }
+      }
+    },
+    {
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/8ce3da23-7156-49e4-b145-24f95f9dcb46",
+      "parameters": {
+        "tagName": { "value": "INFY_EA_CustomTag03" },
+        "tagValue": { "value": "[parameters('infyEACustomTag03Value')]" }
+      }
+    },
+    {
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/49c88fc8-6fd1-46fd-a676-f12d1d3a4c71",
+      "parameters": {
+        "tagName": { "value": "INFY_EA_CustomTag03" },
+        "tagValue": { "value": "[parameters('infyEACustomTag03Value')]" }
+      }
+    },
+    {
+      "policyDefinitionId": "/subscriptions/5fc55004-edd5-4d87-beca-5887dfe573ea/providers/Microsoft.Authorization/policyDefinitions/5afb197e-aed1-44e3-b56d-5b4dfb824027",
+      "parameters": { "resourceGroupName": { "value": "rg-staging-main" } }
+    }
+  ],
+  "name": "infyppcinitiativeall",
+  "type": "Microsoft.Authorization/policySetDefinitions"
+}

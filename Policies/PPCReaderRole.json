@@ -1,0 +1,15 @@
+{
+  "AssignableScopes": [
+    "/subscriptions/5fc55004-edd5-4d87-beca-5887dfe573ea"
+  ],
+  "Description": "Custom reader role for PPC.",
+  "IsCustom": true,
+  "Actions": [
+    "*/read",
+    "Microsoft.Network/virtualNetworks/subnets/join/action",
+    "Microsoft.Resources/deployments/validate/action"
+  ],
+  "NotActions": [],
+  "Name": "PPCReader",
+  "Id" :  null
+}

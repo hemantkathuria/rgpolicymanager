@@ -1,0 +1,19 @@
+{
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Network/publicIpAddresses"
+        }
+      ]
+    },
+    "then": {
+      "effect": "deny"
+    }
+  },
+  "parameters": {},
+  "metadata": {
+    "category": "CUSTOM_TEST"
+  }
+}

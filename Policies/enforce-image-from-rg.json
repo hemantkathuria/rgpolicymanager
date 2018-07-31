@@ -1,0 +1,30 @@
+﻿{
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Compute/virtualMachines"
+        },
+        {
+          "not": {
+            "field": "Microsoft.Compute/imageId",
+            "contains": "[concat('resourceGroups/',parameters('resourceGroupName'))]"
+          }
+        }
+      ]
+    },
+    "then": {
+      "effect": "deny"
+    }
+  },
+  "parameters": {
+    "resourceGroupName": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Resource Group Name",
+        "strongType": "ExistingResourceGroups"
+      }
+    }
+  }
+}
