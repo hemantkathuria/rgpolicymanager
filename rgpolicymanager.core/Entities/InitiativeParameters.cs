@@ -15,6 +15,8 @@ namespace rgpolicymanager.core.Entities
         public InfyEACustomTag02Value infyEACustomTag02Value { get; set; }
         public InfyEACustomTag03Value infyEACustomTag03Value { get; set; }
         public VmNamePatternValueValue vmNamePatternValueValue { get; set; }
+        public AsNamePatternValueValue asNamePatternValueValue { get; set; }
+
     }
 
     public class InfyBusinessUnitValue
@@ -61,6 +63,9 @@ namespace rgpolicymanager.core.Entities
     {
         public string value { get; set; }
     }
+    public class AsNamePatternValueValue
+    {
+        public string value { get; set; }
+    }
 
-   
 }

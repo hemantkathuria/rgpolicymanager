@@ -1,4 +1,6 @@
 ﻿using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Fluent;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -42,13 +44,26 @@ namespace rgpolicymanager
 
             Console.WriteLine("Initiative Assigned!");
 
-            await resourceGroupManager.AssignRoles(appSettings.Value.MainResourceGroup, 
-                                                    appSettings.Value.PPCReaderRoleId,appSettings.Value.ResourceGroupName,appSettings.Value.ContributorRoleId,appSettings.Value.ADProjectGroupId);
+            await resourceGroupManager.AssignRoles(appSettings.Value.MainResourceGroup,
+                                                    appSettings.Value.PPCReaderRoleId, appSettings.Value.ResourceGroupName, appSettings.Value.ContributorRoleId, appSettings.Value.ADProjectGroupId);
 
             Console.WriteLine("Roles Assigned!");
 
             Console.ReadLine();
         }
+
+        //private async Task InitiativeCode()
+        //{
+            //PolicySetDefinition  psDefinition = await policyManager.GetInitiative("infyppcinitiativeall");
+
+            //string json = Newtonsoft.Json.JsonConvert.SerializeObject(psDefinition);
+
+            //string readJson= System.IO.File.ReadAllText("D:\\Data\\Infosys\\PPC\\policies\\rgpolicymanager\\Policies\\initiative.json");
+
+            //PolicySetDefinition policySetDefinition = Newtonsoft.Json.JsonConvert.DeserializeObject<PolicySetDefinition>(readJson);
+
+            //await policyManager.CreateOrUpdateInitiative("infyppcinitiativeall", policySetDefinition);
+        //}
 
         /// <summary>
         /// Configure Configuration, Logger and Other Services in Dependency Injection
@@ -86,6 +101,8 @@ namespace rgpolicymanager
                 appSettings.Initiativename = appSettingsSection["initiativename"];
 
                 appSettings.VMNamePattern = appSettingsSection["vmNamePattern"];
+
+                appSettings.ASNamePattern = appSettingsSection["asNamePattern"];
 
                 appSettings.ResourceGroupName = appSettingsSection["resourcegroupname"];
 

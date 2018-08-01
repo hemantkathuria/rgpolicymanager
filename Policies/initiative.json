@@ -1,4 +1,4 @@
-{
+﻿{
   "properties.policyType": "Custom",
   "properties.displayName": "Infoys PPC Initiative - All",
   "properties.description": null,
@@ -13,57 +13,43 @@
   "properties.parameters": {
     "infyBusinessUnitValue": {
       "type": "String",
-      "metadata": {
-        "displayName": "required value for INFY_EA_BusinessUnit tag"
-      }
+      "metadata": { "displayName": "required value for INFY_EA_BusinessUnit tag" }
     },
     "infyCostCenterValue": {
       "type": "String",
-      "metadata": {
-        "displayName": "required value for INFY_EA_CostCenter tag"
-      }
+      "metadata": { "displayName": "required value for INFY_EA_CostCenter tag" }
     },
     "infyProjectCodeValue": {
       "type": "String",
-      "metadata": {
-        "displayName": "required value for INFY_EA_ProjectCode tag"
-      }
+      "metadata": { "displayName": "required value for INFY_EA_ProjectCode tag" }
     },
     "infyEAPurposeValue": {
       "type": "String",
-      "metadata": {
-        "displayName": "required value for INFY_EA_Purpose tag"
-      }
+      "metadata": { "displayName": "required value for INFY_EA_Purpose tag" }
     },
     "infyEAWorkloadTypeValue": {
       "type": "String",
-      "metadata": {
-        "displayName": "required value for INFY_EA_WorkLoadType tag"
-      }
+      "metadata": { "displayName": "required value for INFY_EA_WorkLoadType tag" }
     },
     "infyEACustomTag01Value": {
       "type": "String",
-      "metadata": {
-        "displayName": "required value for INFY_EA_CustomTag01 tag"
-      }
+      "metadata": { "displayName": "required value for INFY_EA_CustomTag01 tag" }
     },
     "infyEACustomTag02Value": {
       "type": "String",
-      "metadata": {
-        "displayName": "required value for INFY_EA_CustomTag02 tag"
-      }
+      "metadata": { "displayName": "required value for INFY_EA_CustomTag02 tag" }
     },
     "infyEACustomTag03Value": {
       "type": "String",
-      "metadata": {
-        "displayName": "required value for INFY_EA_CustomTag03 tag"
-      }
+      "metadata": { "displayName": "required value for INFY_EA_CustomTag03 tag" }
     },
     "vmNamePatternValueValue": {
       "type": "String",
-      "metadata": {
-        "displayName": "Virtual Machine Name Pattern"
-      }
+      "metadata": { "displayName": "Virtual Machine Name Pattern" }
+    },
+    "asNamePatternValueValue": {
+      "type": "String",
+      "metadata": { "displayName": "Availability Set Name Pattern" }
     }
   },
   "properties.policyDefinitions": [
@@ -74,6 +60,10 @@
     {
       "policyDefinitionId": "/subscriptions/5fc55004-edd5-4d87-beca-5887dfe573ea/providers/Microsoft.Authorization/policyDefinitions/5056ca04-f5e2-446d-ae04-a929618340b1",
       "parameters": { "vmnamepattern": { "value": "[parameters('vmNamePatternValueValue')]" } }
+    },
+    {
+      "policyDefinitionId": "/subscriptions/5fc55004-edd5-4d87-beca-5887dfe573ea/providers/Microsoft.Authorization/policyDefinitions/8eabd7d3-5c01-4c27-bb78-5a76dbcb00e2",
+      "parameters": { "asnamepattern": { "value": "[parameters('asNamePatternValueValue')]" } }
     },
     {
       "policyDefinitionId": "/subscriptions/5fc55004-edd5-4d87-beca-5887dfe573ea/providers/Microsoft.Authorization/policyDefinitions/5056ca04-f5e2-446d-ae04-a9296183410a",
@@ -328,6 +318,7 @@
       "parameters": { "resourceGroupName": { "value": "rg-staging-main" } }
     }
   ],
+  "id": "/subscriptions/5fc55004-edd5-4d87-beca-5887dfe573ea/providers/Microsoft.Authorization/policySetDefinitions/infyppcinitiativeall",
   "name": "infyppcinitiativeall",
   "type": "Microsoft.Authorization/policySetDefinitions"
 }

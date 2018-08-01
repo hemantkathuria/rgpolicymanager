@@ -50,6 +50,11 @@ namespace rgpolicymanager.core.Entities
         public string VMNamePattern { get; set; }
 
         /// <summary>
+        /// ASNamePattern
+        /// </summary>
+        public string ASNamePattern { get; set; }
+
+        /// <summary>
         /// ResourceGroupName
         /// </summary>
         public string ResourceGroupName { get; set; }

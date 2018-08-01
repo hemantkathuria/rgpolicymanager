@@ -100,6 +100,63 @@ namespace rgpolicymanager.core
         }
 
         /// <summary>
+        /// Returns the initiative Details
+        /// </summary>
+        /// <param name="initiativeName"></param>
+        /// <returns></returns>
+        public async Task<PolicySetDefinition> GetInitiative(string initiativeName)
+        {
+            var serviceCredentials = await _authenticationHelper.GetServiceClientCredentials();
+
+            PolicyClient client = new PolicyClient(serviceCredentials);
+
+            string subscriptionid = _appSettings.Subscriptionid;
+
+            client.SubscriptionId = subscriptionid;
+
+            PolicySetDefinition initiative = await client.PolicySetDefinitions.GetAsync(initiativeName);
+
+            return initiative;
+        }
+
+        /// <summary>
+        /// DeleteInitiative
+        /// </summary>
+        /// <param name="initiativeName"></param>
+        /// <returns></returns>
+        public async Task DeleteInitiative(string initiativeName)
+        {
+            var serviceCredentials = await _authenticationHelper.GetServiceClientCredentials();
+
+            PolicyClient client = new PolicyClient(serviceCredentials);
+
+            string subscriptionid = _appSettings.Subscriptionid;
+
+            client.SubscriptionId = subscriptionid;
+
+            await client.PolicySetDefinitions.DeleteAsync(initiativeName);
+        }
+
+        /// <summary>
+        /// CreateOrUpdateInitiative
+        /// </summary>
+        /// <param name="initiativeName"></param>
+        /// <returns></returns>
+        public async Task CreateOrUpdateInitiative(string initiativeName, PolicySetDefinition policySetDefinition)
+        {
+            var serviceCredentials = await _authenticationHelper.GetServiceClientCredentials();
+
+            PolicyClient client = new PolicyClient(serviceCredentials);
+
+            string subscriptionid = _appSettings.Subscriptionid;
+
+            client.SubscriptionId = subscriptionid;
+
+            await client.PolicySetDefinitions.CreateOrUpdateAsync(initiativeName, policySetDefinition);
+        }
+
+
+        /// <summary>
         /// GetInitiativeParameters
         /// </summary>
         /// <param name="tags"></param>
@@ -125,7 +182,11 @@ namespace rgpolicymanager.core
 
             parameters.vmNamePatternValueValue = new VmNamePatternValueValue() { value = _appSettings.VMNamePattern };
 
+            parameters.asNamePatternValueValue = new AsNamePatternValueValue() { value = _appSettings.ASNamePattern };
+
             parameters.vmNamePatternValueValue.value = parameters.vmNamePatternValueValue.value.Replace(PROJECT_REPLACE_TOKEN, projectCode);
+
+            parameters.asNamePatternValueValue.value = parameters.asNamePatternValueValue.value.Replace(PROJECT_REPLACE_TOKEN, projectCode);
 
             return parameters;
 
