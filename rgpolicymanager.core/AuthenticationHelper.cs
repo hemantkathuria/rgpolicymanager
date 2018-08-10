@@ -44,6 +44,34 @@ namespace rgpolicymanager.core
             return serviceClientCreds;
         }
 
+
+        public async Task<ServiceClientCredentials> GetGraphServiceClientCredentials()
+        {
+            AuthenticationContext authContext = new AuthenticationContext(_appSettings.Authority);
+
+            AuthenticationResult authResult = await authContext.AcquireTokenAsync("https://graph.windows.net", new ClientCredential(_appSettings.Clientid, _appSettings.Clientsecret));
+
+            string accessToken = authResult.AccessToken;
+
+            ServiceClientCredentials serviceClientCreds = new TokenCredentials(authResult.AccessToken);
+
+            return serviceClientCreds;
+        }
+        /// <summary>
+        /// GetGraphAuthenticationResult
+        /// </summary>
+        /// <returns></returns>
+        public async Task<AuthenticationResult> GetGraphAuthenticationResult()
+        {
+            ClientCredential credential = new ClientCredential(_appSettings.Clientid, _appSettings.Clientsecret);
+
+            AuthenticationContext authContext = new AuthenticationContext(_appSettings.Authority);
+
+            AuthenticationResult authResult = await authContext.AcquireTokenAsync("https://graph.microsoft.com/", credential);
+
+            return authResult;
+        }
+
         /// <summary>
         /// Returns Azure Credentials
         /// </summary>
@@ -53,7 +81,7 @@ namespace rgpolicymanager.core
             AzureCredentials credentials = SdkContext.AzureCredentialsFactory.FromServicePrincipal(_appSettings.Clientid, _appSettings.Clientsecret, _appSettings.TenantId, AzureEnvironment.AzureGlobalCloud);
 
             return credentials;
-
         }
+
     }
 }

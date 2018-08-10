@@ -30,24 +30,33 @@ namespace rgpolicymanager
 
             PolicyManager policyManager = _serviceProvider.GetService<PolicyManager>();
 
+            GraphManager graphManager = _serviceProvider.GetService<GraphManager>();
+
             IOptions<Tags> tags = _serviceProvider.GetService<IOptions<Tags>>();
 
             IOptions<AppSettings> appSettings = _serviceProvider.GetService<IOptions<AppSettings>>();
 
-            string initiativeAssignmentName = $"{appSettings.Value.ResourceGroupName}_{appSettings.Value.Initiativename}";
+            //string initiativeAssignmentName = $"{appSettings.Value.ResourceGroupName}_{appSettings.Value.Initiativename}";
 
-            var resourceGroup = await resourceGroupManager.EnsureResourceGroupExists(appSettings.Value.ResourceGroupName, appSettings.Value.ResourceGroupLocation, tags.Value);
+            //var resourceGroup = await resourceGroupManager.EnsureResourceGroupExists(appSettings.Value.ResourceGroupName, appSettings.Value.ResourceGroupLocation, tags.Value);
 
-            Console.WriteLine("Resource Group Created!");
+            //Console.WriteLine("Resource Group Created!");
 
-            var initiative = await policyManager.AssignInitiative(appSettings.Value.Initiativename, appSettings.Value.ProjectCode, resourceGroup.Id, initiativeAssignmentName, tags.Value);
+            //var initiative = await policyManager.AssignInitiative(appSettings.Value.Initiativename, appSettings.Value.ProjectCode, resourceGroup.Id, initiativeAssignmentName, tags.Value);
 
-            Console.WriteLine("Initiative Assigned!");
+            //Console.WriteLine("Initiative Assigned!");
 
-            await resourceGroupManager.AssignRoles(appSettings.Value.MainResourceGroup,
-                                                    appSettings.Value.PPCReaderRoleId, appSettings.Value.ResourceGroupName, appSettings.Value.ContributorRoleId, appSettings.Value.ADProjectGroupId);
 
-            Console.WriteLine("Roles Assigned!");
+            //var groupId = await graphManager.EnsureAzureADGroupExists("ppc-automation-Test2");
+
+            //var userId = await graphManager.EnsureAzureADGuestUserExists("hemantk", "hemantk@microsoft.com", "http://infosys.com/"); 
+
+            //await graphManager.EnsureUserExistsInGroup("ppcstagingproject", "1fc5f8b5-10c7-410b-880b-e83ff4ec38cf");
+            
+            //await resourceGroupManager.AssignRoles(appSettings.Value.MainResourceGroup,
+            //                                        appSettings.Value.PPCReaderRoleId, appSettings.Value.ResourceGroupName, appSettings.Value.ContributorRoleId, appSettings.Value.ADProjectGroupId);
+
+            //Console.WriteLine("Roles Assigned!");
 
             Console.ReadLine();
         }
@@ -147,6 +156,8 @@ namespace rgpolicymanager
             serviceCollection.AddTransient<PolicyManager>();
 
             serviceCollection.AddTransient<ResourceGroupManager>();
+
+            serviceCollection.AddTransient<GraphManager>();
         }
     }
 }
