@@ -31,11 +31,11 @@ namespace rgpolicymanager.core
         /// Returns service credentials
         /// </summary>
         /// <returns></returns>
-        public async Task<ServiceClientCredentials> GetServiceClientCredentials()
+        public async Task<ServiceClientCredentials> GetServiceClientCredentials(string resource)
         {
             AuthenticationContext authContext = new AuthenticationContext(_appSettings.Authority);
 
-            AuthenticationResult authResult = await authContext.AcquireTokenAsync(_appSettings.Resource, new ClientCredential(_appSettings.Clientid, _appSettings.Clientsecret));
+            AuthenticationResult authResult = await authContext.AcquireTokenAsync(resource, new ClientCredential(_appSettings.Clientid, _appSettings.Clientsecret));
 
             string accessToken = authResult.AccessToken;
 
@@ -44,19 +44,6 @@ namespace rgpolicymanager.core
             return serviceClientCreds;
         }
 
-
-        public async Task<ServiceClientCredentials> GetGraphServiceClientCredentials()
-        {
-            AuthenticationContext authContext = new AuthenticationContext(_appSettings.Authority);
-
-            AuthenticationResult authResult = await authContext.AcquireTokenAsync("https://graph.windows.net", new ClientCredential(_appSettings.Clientid, _appSettings.Clientsecret));
-
-            string accessToken = authResult.AccessToken;
-
-            ServiceClientCredentials serviceClientCreds = new TokenCredentials(authResult.AccessToken);
-
-            return serviceClientCreds;
-        }
         /// <summary>
         /// GetGraphAuthenticationResult
         /// </summary>
@@ -67,7 +54,7 @@ namespace rgpolicymanager.core
 
             AuthenticationContext authContext = new AuthenticationContext(_appSettings.Authority);
 
-            AuthenticationResult authResult = await authContext.AcquireTokenAsync("https://graph.microsoft.com/", credential);
+            AuthenticationResult authResult = await authContext.AcquireTokenAsync(ApplicationConstants.RESOURCE_URI.MICROSOFT_GRAPH, credential);
 
             return authResult;
         }

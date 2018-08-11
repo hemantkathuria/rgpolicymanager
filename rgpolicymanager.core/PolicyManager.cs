@@ -61,7 +61,7 @@ namespace rgpolicymanager.core
         /// <returns></returns>
         public async Task<PolicyAssignment> AssignInitiative(string initiativeName,string projectCode, string scope, string assignmentName, Tags tags)
         {
-            var serviceCredentials = await _authenticationHelper.GetServiceClientCredentials();
+            var serviceCredentials = await _authenticationHelper.GetServiceClientCredentials(ApplicationConstants.RESOURCE_URI.MANAGEMENT);
 
             PolicyClient client = new PolicyClient(serviceCredentials);
 
@@ -106,7 +106,7 @@ namespace rgpolicymanager.core
         /// <returns></returns>
         public async Task<PolicySetDefinition> GetInitiative(string initiativeName)
         {
-            var serviceCredentials = await _authenticationHelper.GetServiceClientCredentials();
+            var serviceCredentials = await _authenticationHelper.GetServiceClientCredentials(ApplicationConstants.RESOURCE_URI.MANAGEMENT);
 
             PolicyClient client = new PolicyClient(serviceCredentials);
 
@@ -126,7 +126,7 @@ namespace rgpolicymanager.core
         /// <returns></returns>
         public async Task DeleteInitiative(string initiativeName)
         {
-            var serviceCredentials = await _authenticationHelper.GetServiceClientCredentials();
+            var serviceCredentials = await _authenticationHelper.GetServiceClientCredentials(ApplicationConstants.RESOURCE_URI.MANAGEMENT);
 
             PolicyClient client = new PolicyClient(serviceCredentials);
 
@@ -144,7 +144,7 @@ namespace rgpolicymanager.core
         /// <returns></returns>
         public async Task CreateOrUpdateInitiative(string initiativeName, PolicySetDefinition policySetDefinition)
         {
-            var serviceCredentials = await _authenticationHelper.GetServiceClientCredentials();
+            var serviceCredentials = await _authenticationHelper.GetServiceClientCredentials(ApplicationConstants.RESOURCE_URI.MANAGEMENT);
 
             PolicyClient client = new PolicyClient(serviceCredentials);
 

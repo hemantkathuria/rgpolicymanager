@@ -36,27 +36,25 @@ namespace rgpolicymanager
 
             IOptions<AppSettings> appSettings = _serviceProvider.GetService<IOptions<AppSettings>>();
 
-            //string initiativeAssignmentName = $"{appSettings.Value.ResourceGroupName}_{appSettings.Value.Initiativename}";
+            string initiativeAssignmentName = $"{appSettings.Value.ResourceGroupName}_{appSettings.Value.Initiativename}";
 
-            //var resourceGroup = await resourceGroupManager.EnsureResourceGroupExists(appSettings.Value.ResourceGroupName, appSettings.Value.ResourceGroupLocation, tags.Value);
+            var resourceGroup = await resourceGroupManager.EnsureResourceGroupExists(appSettings.Value.ResourceGroupName, appSettings.Value.ResourceGroupLocation, tags.Value);
 
-            //Console.WriteLine("Resource Group Created!");
+            Console.WriteLine("Resource Group Created!");
 
-            //var initiative = await policyManager.AssignInitiative(appSettings.Value.Initiativename, appSettings.Value.ProjectCode, resourceGroup.Id, initiativeAssignmentName, tags.Value);
+            var initiative = await policyManager.AssignInitiative(appSettings.Value.Initiativename, appSettings.Value.ProjectCode, resourceGroup.Id, initiativeAssignmentName, tags.Value);
 
-            //Console.WriteLine("Initiative Assigned!");
+            Console.WriteLine("Initiative Assigned!");
 
+            var groupid = await graphManager.EnsureUserGroupMembershipExists(appSettings.Value.ADPUserEmailAddress,appSettings.Value.ADPUserEmailAddress, appSettings.Value.InviteUserRedirectUri,appSettings.Value.ADProjectGroupName);
 
-            //var groupId = await graphManager.EnsureAzureADGroupExists("ppc-automation-Test2");
+            Console.WriteLine("Ensured User, Group and Membership Exists!");
 
-            //var userId = await graphManager.EnsureAzureADGuestUserExists("hemantk", "hemantk@microsoft.com", "http://infosys.com/"); 
+            await resourceGroupManager.AssignRoles(appSettings.Value.MainResourceGroup,
+                                                    appSettings.Value.PPCReaderRoleId, appSettings.Value.ResourceGroupName, 
+                                                    appSettings.Value.ContributorRoleId, groupid);
 
-            //await graphManager.EnsureUserExistsInGroup("ppcstagingproject", "1fc5f8b5-10c7-410b-880b-e83ff4ec38cf");
-            
-            //await resourceGroupManager.AssignRoles(appSettings.Value.MainResourceGroup,
-            //                                        appSettings.Value.PPCReaderRoleId, appSettings.Value.ResourceGroupName, appSettings.Value.ContributorRoleId, appSettings.Value.ADProjectGroupId);
-
-            //Console.WriteLine("Roles Assigned!");
+            Console.WriteLine("Roles Assigned to group on resource group!");
 
             Console.ReadLine();
         }
@@ -103,8 +101,6 @@ namespace rgpolicymanager
 
                 appSettings.Clientsecret = appSettingsSection["clientsecret"];
 
-                appSettings.Resource = appSettingsSection["resource"];
-
                 appSettings.Subscriptionid = appSettingsSection["subscriptionid"];
 
                 appSettings.Initiativename = appSettingsSection["initiativename"];
@@ -125,8 +121,11 @@ namespace rgpolicymanager
 
                 appSettings.MainResourceGroup = appSettingsSection["mainresourcegroup"];
 
-                appSettings.ADProjectGroupId = appSettingsSection["adprojectgroupid"];
+                appSettings.ADProjectGroupName = appSettingsSection["adprojectgroupname"];
 
+                appSettings.ADPUserEmailAddress = appSettingsSection["aduseremailaddress"];
+
+                appSettings.InviteUserRedirectUri = appSettingsSection["inviteuserredirecturi"];
             });
 
             serviceCollection.Configure<Tags>(tags =>

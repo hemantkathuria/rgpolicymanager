@@ -39,11 +39,22 @@ namespace rgpolicymanager.core
             _appSettings = appSettings.Value;
         }
 
+        public async Task<string> EnsureUserGroupMembershipExists(string userDisplayName, string userEmailAddress,string inviteUserRedirectUri, string groupName)
+        {
+            string groupId = await EnsureAzureADGroupExists(groupName);
+
+            string userId = await EnsureAzureADGuestUserExists(userDisplayName, userEmailAddress, inviteUserRedirectUri);
+
+            await EnsureUserExistsInGroup(groupId, userId);
+
+            return groupId;
+        }
+
         /// <summary>
         /// Ensures the group Exists
         /// </summary>
         /// <param name="groupName"></param>
-        public async Task<string> EnsureAzureADGroupExists(string groupName)
+        private async Task<string> EnsureAzureADGroupExists(string groupName)
         {
             string groupId;
 
@@ -78,7 +89,7 @@ namespace rgpolicymanager.core
         /// </summary>
         /// <param name="userPrincipalName"></param>
         /// <returns></returns>
-        public async Task<string> EnsureAzureADGuestUserExists(string userDisplayName, string userEmailAddress, string redirectUri)
+        private async Task<string> EnsureAzureADGuestUserExists(string userDisplayName, string userEmailAddress, string redirectUri)
         {
             var client = RestClient
             .Configure()
@@ -100,6 +111,40 @@ namespace rgpolicymanager.core
                 return user.Id;
             }
         }
+
+
+        /// <summary>
+        /// EnsureUserExistsInGroup
+        /// </summary>
+        /// <param name="groupName"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        private async Task EnsureUserExistsInGroup(string groupId, string userId)
+        {
+            ServiceClientCredentials credentails = await _authenticationHelper.GetServiceClientCredentials(ApplicationConstants.RESOURCE_URI.AD_GRAPH);
+
+            GraphRbacManagementClient rbacClient = new GraphRbacManagementClient(credentails);
+
+            rbacClient.TenantID = _appSettings.TenantId;
+
+            CheckGroupMembershipParameters parameters = new CheckGroupMembershipParameters() { MemberId = userId, GroupId = groupId };
+
+            var isMemberExists = await rbacClient.Groups.IsMemberOfAsync(parameters);
+
+            if (isMemberExists.Value.HasValue && isMemberExists.Value.Value)
+            {
+
+            }
+            else
+            {
+                string url = $"{ApplicationConstants.BASE_URL.AD_GRAPH}{_appSettings.TenantId}/directoryObjects/{userId}";
+
+                GroupAddMemberParameters grouParameters = new GroupAddMemberParameters() { Url = url };
+
+                await rbacClient.Groups.AddMemberAsync(groupId, grouParameters);
+            }
+        }
+
 
         /// <summary>
         /// Invites B2B User
@@ -124,7 +169,7 @@ namespace rgpolicymanager.core
 
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://graph.microsoft.com/");
+                client.BaseAddress = new Uri($"{ApplicationConstants.BASE_URL.MICROSOFT_GRAPH}");
 
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -140,46 +185,5 @@ namespace rgpolicymanager.core
             }
         }
 
-        /// <summary>
-        /// EnsureUserExistsInGroup
-        /// </summary>
-        /// <param name="groupName"></param>
-        /// <param name="userId"></param>
-        /// <returns></returns>
-        public async Task EnsureUserExistsInGroup(string groupName, string userId)
-        {
-            var client = RestClient
-            .Configure()
-            .WithEnvironment(AzureEnvironment.AzureGlobalCloud)
-            .WithLogLevel(HttpLoggingDelegatingHandler.Level.None)
-            .WithCredentials(_authenticationHelper.GetAzureCrendentials())
-            .Build();
-
-            GraphRbacManager graphRbacManager = new GraphRbacManager(client, _appSettings.TenantId);
-
-            IActiveDirectoryGroup group = await graphRbacManager.Groups.GetByNameAsync(groupName);
-
-            ServiceClientCredentials credentails = await _authenticationHelper.GetGraphServiceClientCredentials();
-
-            GraphRbacManagementClient rbacClient = new GraphRbacManagementClient(credentails);
-
-            rbacClient.TenantID = _appSettings.TenantId;
-
-            CheckGroupMembershipParameters parameters = new CheckGroupMembershipParameters() { MemberId = userId, GroupId = group.Id };
-
-            var isMemberExists = await rbacClient.Groups.IsMemberOfAsync(parameters);
-
-            if (isMemberExists.Value.HasValue && isMemberExists.Value.Value)
-            {
-                
-            }else
-            {
-                string url = $"https://graph.windows.net/{_appSettings.TenantId}/directoryObjects/{userId}";
-
-                GroupAddMemberParameters grouParameters = new GroupAddMemberParameters() { Url = url };
-
-                await rbacClient.Groups.AddMemberAsync(group.Id, grouParameters);
-            }
-        }
     }
 }

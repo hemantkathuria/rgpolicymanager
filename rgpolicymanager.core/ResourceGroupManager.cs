@@ -51,7 +51,7 @@ namespace rgpolicymanager.core
         /// <param name="resourceGroupLocation">The resource group location. Required when creating a new resource group.</param>
         public async Task<ResourceGroup> EnsureResourceGroupExists(string resourceGroupName, string resourceGroupLocation , Tags tags)
         {
-            ServiceClientCredentials serviceClientCredentials = await _authenticationHelper.GetServiceClientCredentials();
+            ServiceClientCredentials serviceClientCredentials = await _authenticationHelper.GetServiceClientCredentials(ApplicationConstants.RESOURCE_URI.MANAGEMENT);
 
             Microsoft.Azure.Management.ResourceManager.ResourceManagementClient resourceManagementClient = new Microsoft.Azure.Management.ResourceManager.ResourceManagementClient(serviceClientCredentials);
 
@@ -95,7 +95,7 @@ namespace rgpolicymanager.core
         /// <returns></returns>
         public async Task AssignRoles(string mainResourceGroup, string ppcReaderRoleId,string resourceGroup, string contributorRoleId, string adGroupId)
         {
-            ServiceClientCredentials serviceClientCredentials = await _authenticationHelper.GetServiceClientCredentials();
+            ServiceClientCredentials serviceClientCredentials = await _authenticationHelper.GetServiceClientCredentials(ApplicationConstants.RESOURCE_URI.MANAGEMENT);
 
             Microsoft.Azure.Management.ResourceManager.ResourceManagementClient resourceManagementClient = new Microsoft.Azure.Management.ResourceManager.ResourceManagementClient(serviceClientCredentials);
 

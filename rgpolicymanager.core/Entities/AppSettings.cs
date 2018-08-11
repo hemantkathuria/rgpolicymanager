@@ -30,11 +30,6 @@ namespace rgpolicymanager.core.Entities
         public string  Clientsecret { get; set; }
 
         /// <summary>
-        /// Resource
-        /// </summary>
-        public string Resource { get; set; }
-
-        /// <summary>
         /// Subscription Id
         /// </summary>
         public string Subscriptionid { get; set; }
@@ -87,8 +82,17 @@ namespace rgpolicymanager.core.Entities
         /// <summary>
         /// ADProjectGroupId
         /// </summary>
-        public string ADProjectGroupId { get; set; }
+        public string ADProjectGroupName { get; set; }
 
+        /// <summary>
+        /// AD email address
+        /// </summary>
+        public string ADPUserEmailAddress { get; set; }
+
+        /// <summary>
+        /// Invite user redirect uri
+        /// </summary>
+        public string InviteUserRedirectUri { get; set; }
 
     }
 }
