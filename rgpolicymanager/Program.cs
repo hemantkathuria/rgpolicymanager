@@ -11,66 +11,85 @@ using System.Threading.Tasks;
 
 namespace rgpolicymanager
 {
+    /// <summary>
+    /// Service Provider
+    /// </summary>
     class Program
     {
         private static ServiceProvider _serviceProvider;
-
+        
+        /// <summary>
+        /// Main Method
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
         static async Task Main(string[] args)
         {
-            Console.WriteLine("Staring Process!");
+            try
+            {
+                Console.WriteLine("Staring Process!");
 
-            // Create service collection
-            var serviceCollection = new ServiceCollection();
+                // Create service collection
+                var serviceCollection = new ServiceCollection();
 
-            ConfigureServices(serviceCollection);
+                ConfigureServices(serviceCollection);
 
-            _serviceProvider = serviceCollection.BuildServiceProvider();
+                _serviceProvider = serviceCollection.BuildServiceProvider();
 
-            ResourceGroupManager resourceGroupManager = _serviceProvider.GetService<ResourceGroupManager>();
+                ResourceGroupManager resourceGroupManager = _serviceProvider.GetService<ResourceGroupManager>();
 
-            PolicyManager policyManager = _serviceProvider.GetService<PolicyManager>();
+                PolicyManager policyManager = _serviceProvider.GetService<PolicyManager>();
 
-            GraphManager graphManager = _serviceProvider.GetService<GraphManager>();
+                GraphManager graphManager = _serviceProvider.GetService<GraphManager>();
 
-            IOptions<Tags> tags = _serviceProvider.GetService<IOptions<Tags>>();
+                IOptions<Tags> tags = _serviceProvider.GetService<IOptions<Tags>>();
 
-            IOptions<AppSettings> appSettings = _serviceProvider.GetService<IOptions<AppSettings>>();
+                IOptions<AppSettings> appSettings = _serviceProvider.GetService<IOptions<AppSettings>>();
 
-            string initiativeAssignmentName = $"{appSettings.Value.ResourceGroupName}_{appSettings.Value.Initiativename}";
+                string initiativeAssignmentName = $"{appSettings.Value.ResourceGroupName}_{appSettings.Value.Initiativename}";
 
-            var resourceGroup = await resourceGroupManager.EnsureResourceGroupExists(appSettings.Value.ResourceGroupName, appSettings.Value.ResourceGroupLocation, tags.Value);
+                var resourceGroup = await resourceGroupManager.EnsureResourceGroupExists(appSettings.Value.ResourceGroupName, appSettings.Value.ResourceGroupLocation, tags.Value);
 
-            Console.WriteLine("Resource Group Created!");
+                Console.WriteLine("Resource Group Created!");
 
-            var initiative = await policyManager.AssignInitiative(appSettings.Value.Initiativename, appSettings.Value.ProjectCode, resourceGroup.Id, initiativeAssignmentName, tags.Value);
+                var initiative = await policyManager.AssignInitiative(appSettings.Value.Initiativename, appSettings.Value.ProjectCode, resourceGroup.Id, initiativeAssignmentName, tags.Value);
 
-            Console.WriteLine("Initiative Assigned!");
+                Console.WriteLine("Initiative Assigned!");
 
-            var groupid = await graphManager.EnsureUserGroupMembershipExists(appSettings.Value.ADPUserEmailAddress,appSettings.Value.ADPUserEmailAddress, appSettings.Value.InviteUserRedirectUri,appSettings.Value.ADProjectGroupName);
+                var groupid = await graphManager.EnsureUserGroupMembershipExists(appSettings.Value.ADPUserEmailAddress, appSettings.Value.ADPUserEmailAddress, appSettings.Value.InviteUserRedirectUri, appSettings.Value.ADProjectGroupName);
 
-            Console.WriteLine("Ensured User, Group and Membership Exists!");
+                Console.WriteLine("Ensured User, Group and Membership Exists!");
 
-            await resourceGroupManager.AssignRoles(appSettings.Value.MainResourceGroup,
-                                                    appSettings.Value.PPCReaderRoleId, appSettings.Value.ResourceGroupName, 
-                                                    appSettings.Value.ContributorRoleId, groupid);
+                await resourceGroupManager.AssignRoles(appSettings.Value.MainResourceGroup,
+                                                        appSettings.Value.PPCReaderRoleId, appSettings.Value.ResourceGroupName,
+                                                        appSettings.Value.ContributorRoleId, groupid);
 
-            Console.WriteLine("Roles Assigned to group on resource group!");
+                Console.WriteLine("Roles Assigned to Group on Resource Group!");
 
-            Console.ReadLine();
+                Console.WriteLine("Press any key to exit!");
+                
+                Console.ReadLine();
+            }
+            catch(Exception ex)
+            {
+                Console.Write(ex.ToString());
+            }
         }
 
+        #region
         //private async Task InitiativeCode()
         //{
-            //PolicySetDefinition  psDefinition = await policyManager.GetInitiative("infyppcinitiativeall");
+        //PolicySetDefinition  psDefinition = await policyManager.GetInitiative("infyppcinitiativeall");
 
-            //string json = Newtonsoft.Json.JsonConvert.SerializeObject(psDefinition);
+        //string json = Newtonsoft.Json.JsonConvert.SerializeObject(psDefinition);
 
-            //string readJson= System.IO.File.ReadAllText("D:\\Data\\Infosys\\PPC\\policies\\rgpolicymanager\\Policies\\initiative.json");
+        //string readJson= System.IO.File.ReadAllText("D:\\Data\\Infosys\\PPC\\policies\\rgpolicymanager\\Policies\\initiative.json");
 
-            //PolicySetDefinition policySetDefinition = Newtonsoft.Json.JsonConvert.DeserializeObject<PolicySetDefinition>(readJson);
+        //PolicySetDefinition policySetDefinition = Newtonsoft.Json.JsonConvert.DeserializeObject<PolicySetDefinition>(readJson);
 
-            //await policyManager.CreateOrUpdateInitiative("infyppcinitiativeall", policySetDefinition);
+        //await policyManager.CreateOrUpdateInitiative("infyppcinitiativeall", policySetDefinition);
         //}
+        #endregion
 
         /// <summary>
         /// Configure Configuration, Logger and Other Services in Dependency Injection
