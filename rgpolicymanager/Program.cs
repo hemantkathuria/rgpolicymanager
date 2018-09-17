@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.Management.ResourceManager;
+﻿using CsvHelper;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Extensions.Configuration;
@@ -7,7 +8,10 @@ using Microsoft.Extensions.Options;
 using rgpolicymanager.core;
 using rgpolicymanager.core.Entities;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace rgpolicymanager
 {
@@ -97,6 +101,27 @@ namespace rgpolicymanager
         /// <param name="serviceCollection"></param>
         private static void ConfigureServices(IServiceCollection serviceCollection)
         {
+            string csvFilename = "InputData.csv";
+
+            bool csvExists = System.IO.File.Exists(csvFilename);
+
+            List<CSVSetting> csvRecords = null;
+
+            CSVSetting csvSetting = null;
+
+            if (csvExists)
+            {
+                TextReader reader = new StreamReader(csvFilename);
+
+                var csv = new CsvReader(reader);
+
+                csv.Configuration.RegisterClassMap<CsvSettingMap>();
+
+                csvRecords = csv.GetRecords<CSVSetting>().ToList<CSVSetting>();
+
+                csvSetting = csvRecords.FirstOrDefault<CSVSetting>(c => c.Status.Equals("NEW", StringComparison.InvariantCultureIgnoreCase));
+            }
+            
             // Build configuration
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(AppContext.BaseDirectory)
@@ -124,49 +149,91 @@ namespace rgpolicymanager
 
                 appSettings.Initiativename = appSettingsSection["initiativename"];
 
-                appSettings.VMNamePattern = appSettingsSection["vmNamePattern"];
-
-                appSettings.ASNamePattern = appSettingsSection["asNamePattern"];
-
-                appSettings.ResourceGroupName = appSettingsSection["resourcegroupname"];
-
-                appSettings.ResourceGroupLocation = appSettingsSection["resourcegrouplocation"];
-
-                appSettings.ProjectCode = appSettingsSection["projectcode"];
-
                 appSettings.PPCReaderRoleId = appSettingsSection["ppcreaderroleid"];
 
                 appSettings.ContributorRoleId = appSettingsSection["contributorroleid"];
 
                 appSettings.MainResourceGroup = appSettingsSection["mainresourcegroup"];
 
-                appSettings.ADProjectGroupName = appSettingsSection["adprojectgroupname"];
-
-                appSettings.ADPUserEmailAddress = appSettingsSection["aduseremailaddress"];
-
                 appSettings.InviteUserRedirectUri = appSettingsSection["inviteuserredirecturi"];
+
+                /////////////
+
+                if (csvExists && csvSetting != null)
+                {
+                    appSettings.VMNamePattern = csvSetting.VMNamePattern;
+
+                    appSettings.ASNamePattern = csvSetting.ASNamePattern;
+
+                    appSettings.ResourceGroupName = csvSetting.ResourceGroupName;
+
+                    appSettings.ResourceGroupLocation = csvSetting.ResourceGroupLocation;
+
+                    appSettings.ProjectCode = csvSetting.ProjectCode;
+
+                    appSettings.ADProjectGroupName = csvSetting.ADProjectGroupName;
+
+                    appSettings.ADPUserEmailAddress = csvSetting.ADPUserEmailAddress;
+                }
+                else
+                {
+                    appSettings.VMNamePattern = appSettingsSection["vmNamePattern"];
+
+                    appSettings.ASNamePattern = appSettingsSection["asNamePattern"];
+
+                    appSettings.ResourceGroupName = appSettingsSection["resourcegroupname"];
+
+                    appSettings.ResourceGroupLocation = appSettingsSection["resourcegrouplocation"];
+
+                    appSettings.ProjectCode = appSettingsSection["projectcode"];
+
+                    appSettings.ADProjectGroupName = appSettingsSection["adprojectgroupname"];
+
+                    appSettings.ADPUserEmailAddress = appSettingsSection["aduseremailaddress"];
+                }
+                
             });
 
             serviceCollection.Configure<Tags>(tags =>
             {
-                IConfigurationSection tagsSection = configuration.GetSection("Tags");
+                if (csvExists && csvSetting != null)
+                {
+                    tags.INFY_EA_BusinessUnit = csvSetting.INFY_EA_BusinessUnit;
 
-                tags.INFY_EA_BusinessUnit = tagsSection["INFY_EA_BusinessUnit"];
+                    tags.INFY_EA_CostCenter = csvSetting.INFY_EA_CostCenter;
 
-                tags.INFY_EA_CostCenter = tagsSection["INFY_EA_CostCenter"];
+                    tags.INFY_EA_CustomTag01 = csvSetting.INFY_EA_CustomTag01;
 
-                tags.INFY_EA_CustomTag01 = tagsSection["INFY_EA_CustomTag01"];
+                    tags.INFY_EA_CustomTag02 = csvSetting.INFY_EA_CustomTag02;
 
-                tags.INFY_EA_CustomTag02 = tagsSection["INFY_EA_CustomTag02"];
+                    tags.INFY_EA_CustomTag03 = csvSetting.INFY_EA_CustomTag03;
 
-                tags.INFY_EA_CustomTag03 = tagsSection["INFY_EA_CustomTag03"];
+                    tags.INFY_EA_ProjectCode = csvSetting.INFY_EA_ProjectCode;
 
-                tags.INFY_EA_ProjectCode = tagsSection["INFY_EA_ProjectCode"];
+                    tags.INFY_EA_Purpose = csvSetting.INFY_EA_Purpose;
 
-                tags.INFY_EA_Purpose = tagsSection["INFY_EA_Purpose"];
+                    tags.INFY_EA_WorkLoadType = csvSetting.INFY_EA_WorkLoadType;
+                }
+                else
+                {
+                    IConfigurationSection tagsSection = configuration.GetSection("Tags");
 
-                tags.INFY_EA_WorkLoadType = tagsSection["INFY_EA_WorkLoadType"];
-                
+                    tags.INFY_EA_BusinessUnit = tagsSection["INFY_EA_BusinessUnit"];
+
+                    tags.INFY_EA_CostCenter = tagsSection["INFY_EA_CostCenter"];
+
+                    tags.INFY_EA_CustomTag01 = tagsSection["INFY_EA_CustomTag01"];
+
+                    tags.INFY_EA_CustomTag02 = tagsSection["INFY_EA_CustomTag02"];
+
+                    tags.INFY_EA_CustomTag03 = tagsSection["INFY_EA_CustomTag03"];
+
+                    tags.INFY_EA_ProjectCode = tagsSection["INFY_EA_ProjectCode"];
+
+                    tags.INFY_EA_Purpose = tagsSection["INFY_EA_Purpose"];
+
+                    tags.INFY_EA_WorkLoadType = tagsSection["INFY_EA_WorkLoadType"];
+                }
             });
 
             serviceCollection.AddTransient<AuthenticationHelper>();
