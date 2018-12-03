@@ -75,7 +75,7 @@
     },
     {
       "policyDefinitionId": "/subscriptions/5fc55004-edd5-4d87-beca-5887dfe573ea/providers/Microsoft.Authorization/policyDefinitions/a20e8222-84f7-4701-8cbc-56ab456e9093",
-      "parameters": { "subnetId": { "value": "/subscriptions/5fc55004-edd5-4d87-beca-5887dfe573ea/resourceGroups/rg-staging-main/providers/Microsoft.Network/virtualNetworks/ppc-virtual-network/subnets/app" } }
+      "parameters": { "subnetId": { "value": "/subscriptions/5fc55004-edd5-4d87-beca-5887dfe573ea/resourceGroups/RG-INFOSYS-IT-PPC-STAGING/providers/Microsoft.Network/virtualNetworks/VNET-INFOSYS-IT-PPC-STAGING/subnets/App" } }
     },
     {
       "policyDefinitionId": "/subscriptions/5fc55004-edd5-4d87-beca-5887dfe573ea/providers/Microsoft.Authorization/policyDefinitions/a20e8222-84f7-4701-8cbc-56ab456e9033",
@@ -315,7 +315,7 @@
     },
     {
       "policyDefinitionId": "/subscriptions/5fc55004-edd5-4d87-beca-5887dfe573ea/providers/Microsoft.Authorization/policyDefinitions/5afb197e-aed1-44e3-b56d-5b4dfb824027",
-      "parameters": { "resourceGroupName": { "value": "rg-staging-main" } }
+      "parameters": { "resourceGroupName": { "value": "RG-INFOSYS-IT-PPC-STAGING" } }
     }
   ],
   "id": "/subscriptions/5fc55004-edd5-4d87-beca-5887dfe573ea/providers/Microsoft.Authorization/policySetDefinitions/infyppcinitiativeall",

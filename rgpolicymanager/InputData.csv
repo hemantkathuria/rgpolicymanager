@@ -1,3 +1,3 @@
 ﻿Status,vmNamePattern,asNamePattern,resourcegroupname,projectcode,resourcegrouplocation,adprojectgroupname,aduseremailaddress,INFY_EA_BusinessUnit,INFY_EA_CostCenter,INFY_EA_ProjectCode,INFY_EA_Purpose,INFY_EA_WorkLoadType,INFY_EA_CustomTag01,INFY_EA_CustomTag02,INFY_EA_CustomTag03
 OLD,azvm$PRJ$#####,as$PRJ$,rg-ppc-main,ppc,southindia,ppcdemotest,chitpa@microsoft.com,CCD,CCDCOSTCENTER,CCDPROJECTCODE,CCDPURPOSETAG,CCDWORKLOADTYPE,CCDCUSTOMTAG01,CCDCUSTOMTAG02,CCDCUSTOMTAG03
-NEW,azvm$PRJ$#####,as$PRJ$,rg-ppc-main,ppcnew,southindia,ppcdemotest,chitpa@microsoft.com,CCD,CCDCOSTCENTER,CCDPROJECTCODE,CCDPURPOSETAG,CCDWORKLOADTYPE,CCDCUSTOMTAG01,CCDCUSTOMTAG02,CCDCUSTOMTAG03
+NEW,azvm$PRJ$#####,as$PRJ$,rg-ppc-today,pptdy,southindia,pptdy,chitpa@microsoft.com,CCD,CCDCOSTCENTER,CCDPROJECTCODE,CCDPURPOSETAG,CCDWORKLOADTYPE,CCDCUSTOMTAG01,CCDCUSTOMTAG02,CCDCUSTOMTAG03

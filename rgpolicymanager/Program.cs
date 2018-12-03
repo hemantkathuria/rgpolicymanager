@@ -40,6 +40,8 @@ namespace rgpolicymanager
 
                 _serviceProvider = serviceCollection.BuildServiceProvider();
 
+                //await InitiativeCode();
+
                 ResourceGroupManager resourceGroupManager = _serviceProvider.GetService<ResourceGroupManager>();
 
                 PolicyManager policyManager = _serviceProvider.GetService<PolicyManager>();
@@ -81,17 +83,19 @@ namespace rgpolicymanager
         }
 
         #region
-        //private async Task InitiativeCode()
+        //private static async Task InitiativeCode()
         //{
-        //PolicySetDefinition  psDefinition = await policyManager.GetInitiative("infyppcinitiativeall");
+        //    PolicyManager policyManager = _serviceProvider.GetService<PolicyManager>();
 
-        //string json = Newtonsoft.Json.JsonConvert.SerializeObject(psDefinition);
+        //    PolicySetDefinition psDefinition = await policyManager.GetInitiative("infyppcinitiativeall");
 
-        //string readJson= System.IO.File.ReadAllText("D:\\Data\\Infosys\\PPC\\policies\\rgpolicymanager\\Policies\\initiative.json");
+        //    string json = Newtonsoft.Json.JsonConvert.SerializeObject(psDefinition);
 
-        //PolicySetDefinition policySetDefinition = Newtonsoft.Json.JsonConvert.DeserializeObject<PolicySetDefinition>(readJson);
+        //    string readJson = System.IO.File.ReadAllText("D:\\Data\\Infosys\\PPC\\policies\\rgpolicymanager\\Policies\\initiative.json");
 
-        //await policyManager.CreateOrUpdateInitiative("infyppcinitiativeall", policySetDefinition);
+        //    PolicySetDefinition policySetDefinition = Newtonsoft.Json.JsonConvert.DeserializeObject<PolicySetDefinition>(readJson);
+
+        //    await policyManager.CreateOrUpdateInitiative("infyppcinitiativeall", policySetDefinition);
         //}
         #endregion
 
